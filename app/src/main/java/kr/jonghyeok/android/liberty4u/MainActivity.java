@@ -1,10 +1,18 @@
 package kr.jonghyeok.android.liberty4u;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.google.android.material.navigation.NavigationBarView;
 
 import kr.jonghyeok.android.liberty4u.databinding.ActivityMainBinding;
+import kr.jonghyeok.android.liberty4u.fragment.HomeFragment;
+import kr.jonghyeok.android.liberty4u.fragment.ItemListFragment;
+import kr.jonghyeok.android.liberty4u.fragment.SearchFragment;
+import kr.jonghyeok.android.liberty4u.fragment.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -14,5 +22,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setBottomNavigationView();
+
+        // 앱 초기 실행 시 홈화면으로 설정
+        if (savedInstanceState == null) {
+            binding.bottomNavigationView.setSelectedItemId(R.id.fragment_home);
+        }
+    }
+
+    private void setBottomNavigationView() {
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.fragment_home:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
+                    return true;
+
+                case R.id.fragment_search:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new SearchFragment()).commit();
+                    return true;
+
+                case R.id.fragment_item_list:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ItemListFragment()).commit();
+                    return true;
+
+                case R.id.fragment_settings:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new SettingsFragment()).commit();
+                    return true;
+
+                default:
+                    return false;
+            }
+        });
     }
 }
