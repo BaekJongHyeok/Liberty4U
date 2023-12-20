@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/fragment_home"
-        android:title="홈"
+        android:title="Home"
         android:icon="@drawable/home"/>
     <item
         android:id="@+id/fragment_guide"
-        android:title="가이드"
+        android:title="Guide"
         android:icon="@drawable/search"/>
     <item
         android:id="@+id/fragment_item_list"
-        android:title="장비"
+        android:title="Item"
         android:icon="@drawable/item_list"/>
     <item
         android:id="@+id/fragment_settings"
-        android:title="설정"
+        android:title="Setting"
         android:icon="@drawable/setting"/>
 </menu>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +18,10 @@ public class RecentRecyclerViewAdapter extends RecyclerView.Adapter<RecentRecycl
 
     private List<RecentItemList> items;
     private Context context;
-
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
     public RecentRecyclerViewAdapter(Context context, List<RecentItemList> items) {
         this.context = context;
         this.items = items;
@@ -35,9 +39,14 @@ public class RecentRecyclerViewAdapter extends RecyclerView.Adapter<RecentRecycl
 
         holder.titleTextView.setText(item.getTitle());
         holder.descriptionTextView.setText(item.getDescription());
-
-        // 이미지 로딩에는 Picasso나 Glide 같은 이미지 로딩 라이브러리를 사용할 수 있습니다.
-//        Picasso.get().load(item.getImageUrl()).into(holder.imageView);
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -46,12 +55,14 @@ public class RecentRecyclerViewAdapter extends RecyclerView.Adapter<RecentRecycl
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public RelativeLayout layout;
         public ImageView imageView;
         public TextView titleTextView;
         public TextView descriptionTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            layout = itemView.findViewById(R.id.layout_recent);
             imageView = itemView.findViewById(R.id.imageView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);

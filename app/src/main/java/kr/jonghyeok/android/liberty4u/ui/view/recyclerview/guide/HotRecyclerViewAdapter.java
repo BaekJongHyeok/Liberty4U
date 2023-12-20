@@ -1,7 +1,6 @@
 package kr.jonghyeok.android.liberty4u.ui.view.recyclerview.guide;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,6 @@ public class HotRecyclerViewAdapter extends RecyclerView.Adapter<HotRecyclerView
     private List<HotItemList> items;
     private Context context;
     private OnItemClickListener onItemClickListener;
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;

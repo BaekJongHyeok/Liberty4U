@@ -58,15 +58,11 @@ public class GuideFragment extends Fragment {
         recentItems.add(new RecentItemList("https://example.com/image2.jpg", "파올라의 차원진", "협력하여 강력한 몬스터가 있는 던전을 공략"));
 
         hotAdapter = new HotRecyclerViewAdapter(requireContext(), hotItems);
-        hotAdapter.setOnItemClickListener(new HotRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                onClickedItem(position);
-            }
-        });
+        hotAdapter.setOnItemClickListener(position -> onClickedHotItem(position));
         binding.rvHotGuide.setAdapter(hotAdapter);
 
         recentAdapter = new RecentRecyclerViewAdapter(requireContext(), recentItems);
+        recentAdapter.setOnItemClickListener(position -> onClickedRecentItem(position));
         binding.rvRecentGuide.setAdapter(recentAdapter);
 
         addEventClickListener();
@@ -86,13 +82,25 @@ public class GuideFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void onClickedItem(int position) {
+    private void onClickedHotItem(int position) {
         List<String> urls = Arrays.asList(
                 "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%BA%90%EB%A6%AD%ED%84%B0%20%EC%83%81%EC%84%B8%20%EC%A0%95%EB%B3%B4",
                 "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%BD%94%EB%8D%B1%EC%8A%A4",
                 "https://tl.plaync.com/ko-kr/guidebook/view?title=%EA%B8%B8%EB%93%9C",
                 "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%A7%80%EB%8F%84",
                 "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%B1%84%ED%8C%85"
+        );
+
+        if (position >= 0 && position < urls.size()) {
+            startWebActivity(urls.get(position));
+        }
+    }
+
+    private void onClickedRecentItem(int position) {
+        List<String> urls = Arrays.asList(
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%B6%9C%EC%84%9D%EB%B6%80",
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%A7%80%EC%97%AD%20%EC%84%B1%EA%B2%A9",
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%ED%8C%8C%EC%98%AC%EB%9D%BC%EC%9D%98%20%EC%B0%A8%EC%9B%90%EC%A7%84"
         );
 
         if (position >= 0 && position < urls.size()) {
