@@ -7,11 +7,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import kr.jonghyeok.android.liberty4u.R;
@@ -56,6 +58,12 @@ public class GuideFragment extends Fragment {
         recentItems.add(new RecentItemList("https://example.com/image2.jpg", "파올라의 차원진", "협력하여 강력한 몬스터가 있는 던전을 공략"));
 
         hotAdapter = new HotRecyclerViewAdapter(requireContext(), hotItems);
+        hotAdapter.setOnItemClickListener(new HotRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                onClickedItem(position);
+            }
+        });
         binding.rvHotGuide.setAdapter(hotAdapter);
 
         recentAdapter = new RecentRecyclerViewAdapter(requireContext(), recentItems);
@@ -68,8 +76,7 @@ public class GuideFragment extends Fragment {
         binding.btnGotoWebGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tl.plaync.com/ko-kr/guidebook/index"));
-                startActivity(myIntent);
+                startWebActivity("https://tl.plaync.com/ko-kr/guidebook/index");
             }
         });
     }
@@ -77,5 +84,24 @@ public class GuideFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return binding.getRoot();
+    }
+
+    private void onClickedItem(int position) {
+        List<String> urls = Arrays.asList(
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%BA%90%EB%A6%AD%ED%84%B0%20%EC%83%81%EC%84%B8%20%EC%A0%95%EB%B3%B4",
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%BD%94%EB%8D%B1%EC%8A%A4",
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%EA%B8%B8%EB%93%9C",
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%A7%80%EB%8F%84",
+                "https://tl.plaync.com/ko-kr/guidebook/view?title=%EC%B1%84%ED%8C%85"
+        );
+
+        if (position >= 0 && position < urls.size()) {
+            startWebActivity(urls.get(position));
+        }
+    }
+
+    private void startWebActivity(String url) {
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(myIntent);
     }
 }

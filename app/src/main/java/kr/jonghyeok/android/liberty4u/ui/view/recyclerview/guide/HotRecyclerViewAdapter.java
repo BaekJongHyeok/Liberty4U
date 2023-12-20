@@ -1,11 +1,11 @@
 package kr.jonghyeok.android.liberty4u.ui.view.recyclerview.guide;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +17,15 @@ public class HotRecyclerViewAdapter extends RecyclerView.Adapter<HotRecyclerView
 
     private List<HotItemList> items;
     private Context context;
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     public HotRecyclerViewAdapter(Context context, List<HotItemList> items) {
         this.context = context;
@@ -34,7 +43,14 @@ public class HotRecyclerViewAdapter extends RecyclerView.Adapter<HotRecyclerView
         HotItemList item = items.get(position);
 
         holder.imageView.setImageResource(item.getImage());
-
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(position);
+                }
+            }
+        });
         // 이미지 로딩에는 Picasso나 Glide 같은 이미지 로딩 라이브러리를 사용할 수 있습니다.
 //        Picasso.get().load(item.getImageUrl()).into(holder.imageView);
     }
