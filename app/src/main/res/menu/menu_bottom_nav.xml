@@ -5,8 +5,8 @@
         android:title="홈"
         android:icon="@drawable/home"/>
     <item
-        android:id="@+id/fragment_search"
-        android:title="검색"
+        android:id="@+id/fragment_guide"
+        android:title="가이드"
         android:icon="@drawable/search"/>
     <item
         android:id="@+id/fragment_item_list"

@@ -1,17 +1,13 @@
 package kr.jonghyeok.android.liberty4u;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.navigation.NavigationBarView;
 
 import kr.jonghyeok.android.liberty4u.databinding.ActivityMainBinding;
 import kr.jonghyeok.android.liberty4u.fragment.HomeFragment;
 import kr.jonghyeok.android.liberty4u.fragment.ItemListFragment;
-import kr.jonghyeok.android.liberty4u.fragment.SearchFragment;
+import kr.jonghyeok.android.liberty4u.fragment.GuideFragment;
 import kr.jonghyeok.android.liberty4u.fragment.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
                     return true;
 
-                case R.id.fragment_search:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new SearchFragment()).commit();
+                case R.id.fragment_guide:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new GuideFragment()).commit();
                     return true;
 
                 case R.id.fragment_item_list:
